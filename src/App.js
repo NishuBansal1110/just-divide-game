@@ -9,7 +9,6 @@ const generateTile = () => {
   return values[Math.floor(Math.random() * values.length)];
 };
 
-
 function App() {
   const [grid, setGrid] = useState(Array(16).fill(null));
   const [queue, setQueue] = useState([
@@ -26,11 +25,11 @@ function App() {
   );
   const [level, setLevel] = useState(1);
 
-useEffect(() => {
-  const newLevel = Math.floor(score / 10) + 1;
-  setLevel(newLevel);
-}, [score]);
-  
+  useEffect(() => {
+    const newLevel = Math.floor(score / 10) + 1;
+    setLevel(newLevel);
+  }, [score]);
+
   useEffect(() => {
     if (score > bestScore) {
       setBestScore(score);
@@ -38,20 +37,15 @@ useEffect(() => {
     }
   }, [score]);
 
-  // UNDO FUNCTION
   const handleUndo = () => {
     if (undoStack.length === 0) return;
-
     const last = undoStack[undoStack.length - 1];
-
     setGrid(last.grid);
     setQueue(last.queue);
     setScore(last.score);
-
     setUndoStack((prev) => prev.slice(0, -1));
   };
 
-  // GAME OVER
   useEffect(() => {
     if (!canMerge(grid)) {
       alert("Game Over!");
@@ -61,32 +55,32 @@ useEffect(() => {
   return (
     <div className="app">
       <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
-      <div style={{ background: "#ff6b6b", padding: "10px 20px", borderRadius: "10px" }}>
-  LEVEL {level}
-</div>
+        <div style={{ background: "#ff6b6b", padding: "10px 20px", borderRadius: "10px" }}>
+          LEVEL {level}
+        </div>
 
-  <h1>JUST DIVIDE</h1>
+        <h1>JUST DIVIDE</h1>
 
-  <div style={{ background: "#4dabf7", padding: "10px 20px", borderRadius: "10px" }}>
-    SCORE {score}
-  </div>
-</div>
+        <div style={{ background: "#4dabf7", padding: "10px 20px", borderRadius: "10px" }}>
+          SCORE {score}
+        </div>
+      </div>
 
       <button onClick={handleUndo}>Undo</button>
 
       <div className="game">
-      <Grid
-  grid={grid}
-  setGrid={setGrid}
-  queue={queue}
-  setQueue={setQueue}
-  setScore={setScore}
-  score={score}   // ✅ ADD THIS
-  keep={keep}
-  setKeep={setKeep}
-  undoStack={undoStack}
-  setUndoStack={setUndoStack}
-/>
+        <Grid
+          grid={grid}
+          setGrid={setGrid}
+          queue={queue}
+          setQueue={setQueue}
+          setScore={setScore}
+          score={score}
+          keep={keep}
+          setKeep={setKeep}
+          undoStack={undoStack}
+          setUndoStack={setUndoStack}
+        />
 
         <Panel
           queue={queue}

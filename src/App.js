@@ -35,7 +35,7 @@ function App() {
       setBestScore(score);
       localStorage.setItem("bestScore", score);
     }
-  }, [score]);
+  }, [score, bestScore]);
 
   const handleUndo = () => {
     if (undoStack.length === 0) return;
